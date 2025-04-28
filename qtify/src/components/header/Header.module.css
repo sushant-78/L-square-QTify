@@ -1,0 +1,22 @@
+:root {
+  --color-green: #34c94b;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-green);
+  padding: 0.75rem 2rem;
+  height: 74px;
+}
+
+.center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.right {
+  margin-left: 20px;
+}

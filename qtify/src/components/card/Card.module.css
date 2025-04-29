@@ -1,0 +1,52 @@
+.card {
+  width: 159px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #121212;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bottomSection {
+  background: white;
+  padding: 4px 8px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+}
+
+.chip {
+  background-color: #121212 !important;
+  color: white !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  height: 20px !important;
+  padding: 2px 12px !important;
+  border-radius: 10px !important;
+  min-height: unset !important;
+}
+
+.title {
+  color: black;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+}

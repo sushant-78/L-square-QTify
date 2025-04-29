@@ -1,0 +1,55 @@
+.carouselContainer {
+  position: relative;
+  padding: 0 32px;
+}
+
+/* Hide default swiper buttons */
+:global(.swiper-button-next),
+:global(.swiper-button-prev) {
+  display: none;
+}
+
+/* Navigation buttons positioning */
+[class^="swiper-button-prev-"],
+[class^="swiper-button-next-"] {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+[class^="swiper-button-prev-"] {
+  left: 16px;
+}
+
+[class^="swiper-button-next-"] {
+  right: 16px;
+}
+
+[class^="swiper-button-prev-"]:hover,
+[class^="swiper-button-next-"]:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[class^="swiper-button-prev-"] img,
+[class^="swiper-button-next-"] img {
+  width: 20px;
+  height: 20px;
+}
+
+:global(.swiper) {
+  margin: 0 -8px;
+}
+
+:global(.swiper-slide) {
+  padding: 0 8px;
+  box-sizing: border-box;
+}

@@ -7,23 +7,33 @@ import styles from "./SongsSection.module.css";
 export default function SongsSection() {
   const [songs, setSongs] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [selectedGenre] = useState("All");
+  const [selectedGenre, setSelectedGenre] = useState("All");
 
   useEffect(() => {
     const loadData = async () => {
-      const [allSongs, genreList] = await Promise.all([
-        fetchAllSongs(),
-        fetchGenres(),
-      ]);
-      setSongs(allSongs);
-      setGenres(["All", ...genreList]);
+      try {
+        const [allSongs, genreList] = await Promise.all([
+          fetchAllSongs(),
+          fetchGenres(),
+        ]);
+        setSongs(allSongs);
+        setGenres(["All", ...genreList]);
+      } catch (error) {
+        console.error("Error loading songs data:", error);
+      }
     };
     loadData();
   }, []);
 
-  const handleTabChange = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const filteredSongs =
+    selectedGenre === "All"
+      ? songs
+      : songs.filter(
+          (song) => song.genre.toLowerCase() === selectedGenre.toLowerCase()
+        );
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedGenre(newValue);
   };
 
   return (
@@ -67,34 +77,27 @@ export default function SongsSection() {
                 color: "#34c94b",
                 opacity: 1,
               },
-              "&:not(.Mui-selected)": {
-                pointerEvents: "none",
-                cursor: "default",
-              },
             },
           }}
         >
           {genres.map((genre) => (
-            <Tab
-              key={genre}
-              label={genre}
-              value={genre}
-              onClick={(e) => {
-                if (genre !== "All") {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }
-              }}
-            />
+            <Tab key={genre} label={genre} value={genre} />
           ))}
         </Tabs>
       </div>
 
       <Section
         title="Songs"
-        data={songs}
+        data={filteredSongs.map((song) => ({
+          id: song.id,
+          title: song.title,
+          image: song.image,
+          likes: song.likes,
+          genre: song.genre,
+        }))}
         cardType="song"
         uniqueId="songs-section"
+        enableToggle={false}
       />
     </div>
   );

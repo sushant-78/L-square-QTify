@@ -8,7 +8,7 @@ export default function Section({
   title,
   data = [],
   cardType = "album", // 'album' or 'song'
-  enableToggle = false, // true for albums, false for songs
+  enableToggle = true, // Changed default to true for albums
   uniqueId = "", // required for carousel isolation
   setActiveGenre,
   activeGenre,
@@ -16,13 +16,34 @@ export default function Section({
   const [showAll, setShowAll] = useState(false);
   const isSongsSection = title === "Songs";
 
-  const shouldEnableToggle = enableToggle && data.length > 6;
+  // Show toggle only for album sections with more than 6 items
+  const shouldShowToggle = !isSongsSection && data.length > 6;
+
+  const renderCard = (item) => (
+    <div key={item.id} className={styles.cardWrapper}>
+      <Card
+        image={item.image}
+        follows={item.follows}
+        likes={item.likes}
+        genre={item.genre}
+        cardType={cardType}
+      />
+      <Typography className={styles.title}>{item.title}</Typography>
+    </div>
+  );
 
   return (
     <div className={styles.section}>
       <div className={styles.header}>
         <h2>{title}</h2>
-        {!isSongsSection && <span className={styles.showAll}>Show all</span>}
+        {shouldShowToggle && (
+          <button
+            className={styles.showAll}
+            onClick={() => setShowAll(!showAll)}
+          >
+            {showAll ? "Collapse" : "Show all"}
+          </button>
+        )}
       </div>
 
       {isSongsSection && (
@@ -33,7 +54,7 @@ export default function Section({
               className={`${styles.genreButton} ${
                 activeGenre === genre ? styles.active : ""
               }`}
-              // onClick={() => setActiveGenre(genre)}
+              onClick={() => setActiveGenre && setActiveGenre(genre)}
             >
               {genre}
             </button>
@@ -42,34 +63,9 @@ export default function Section({
       )}
 
       {showAll ? (
-        <div className={styles.grid}>
-          {data.map((item) => (
-            <div>
-              <Card
-                key={item.id}
-                title={item.title}
-                image={item.image}
-                follows={item.follows}
-                likes={item.likes}
-                genre={item.genre}
-                cardType={cardType}
-              />
-              <Typography className={styles.title}>{item.title}</Typography>
-            </div>
-          ))}
-        </div>
+        <div className={styles.grid}>{data.map(renderCard)}</div>
       ) : (
-        <Carousel uniqueId={uniqueId}>
-          {data.map((item) => (
-            <Card
-              key={item.id}
-              image={item.image}
-              follows={item.follows}
-              likes={item.likes}
-              cardType={cardType}
-            />
-          ))}
-        </Carousel>
+        <Carousel uniqueId={uniqueId}>{data.map(renderCard)}</Carousel>
       )}
     </div>
   );

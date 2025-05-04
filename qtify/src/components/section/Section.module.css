@@ -22,8 +22,16 @@
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   font-weight: 500;
-  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
+  text-transform: none;
+  transition: opacity 0.2s;
+}
+
+.showAll:hover {
+  opacity: 0.8;
 }
 
 .toggle {
@@ -36,16 +44,30 @@
 }
 
 .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(159px, 1fr));
+  gap: 16px;
+  padding: 0 32px;
+}
+
+.cardWrapper {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 159px;
 }
 
 .title {
-  font-size: 0.9rem;
-  padding: 0.75rem 0.5rem;
-  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
   color: #fff;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .genreButtons {
